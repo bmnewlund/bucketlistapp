@@ -19,7 +19,7 @@ var localLogin = new LocalStrategy(localOptions, function(email, password, done)
 
 		//compare passwords - is 'password' equal to the user.password?
 		//compare pw from req with users saved pw
-		user.comparePassword(password, function(err, isMatch){
+		user.comparePassword(password, function(err, isMatch){ //isMatch compares the passwords
 			//if there was an error, return early.
 			if (err) {return doen(err); }
 			//if it's not the same, it will return false and say they didn't match up.
