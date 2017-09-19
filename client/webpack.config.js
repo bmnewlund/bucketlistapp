@@ -1,3 +1,8 @@
+//This file looks through all of the source JS and combines it into one
+//file. It transforms any JSX code into vanilla JS. Output all into one
+//file where we specify. This takes this code and allows current browsers
+//to be able to read the JSX.
+
 module.exports={
 	devtool: 'source-map',
 	entry:[
