@@ -40,10 +40,9 @@ exports.signup = function(req, res, next){
 	});
 }
 
+exports.signin = function(req, res, next) {
+	//User has already had their email and pw auth'd
+	//We just need to give them a token
+	res.send({ token: createUserToken(req.user) });
+}
 
-//This is the controller that handles the authentication 
-// when a user is signing up or signing out. 
-// exports.signup = function(req, res, next) {
-	//Test
-	// res.send("authorization is happening, yo");
-	// console.log(req.body); //This is an express middleware function allow to easily pull apart an incoming request.
