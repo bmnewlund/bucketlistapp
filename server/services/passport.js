@@ -21,7 +21,7 @@ var localLogin = new LocalStrategy(localOptions, function(email, password, done)
 		//compare pw from req with users saved pw
 		user.comparePassword(password, function(err, isMatch){ //isMatch compares the passwords
 			//if there was an error, return early.
-			if (err) {return doen(err); }
+			if (err) {return done(err); }
 			//if it's not the same, it will return false and say they didn't match up.
 			if (!isMatch) { return done(null, false); }
 
@@ -54,4 +54,4 @@ var jwtLogin = new JwtStrategy(jwtOptions, function(payload, done){
 
 passport.use(jwtLogin);
 
-passport.use(localLogin);
+// passport.use(localLogin);

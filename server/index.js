@@ -11,7 +11,6 @@ mongoose.connect('mongodb://localhost:bucket/bucket'); //Mongoose is the package
 // Middleware
 app.use(bodyParser.json({ type: '*/*'})); // The "type" is allowing for any type with */*
 router(app); // This pulls in the router function from the router.js
-
 // Server
 var port = process.env.PORT || 3000;
 
