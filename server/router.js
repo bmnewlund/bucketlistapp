@@ -8,7 +8,7 @@ var requireSignin = passport.authenticate('local', {session: false});
 
 module.exports = function(app) { //module is a part of node and allows it to be exported
 	app.get('/', requireAuth, function(req, res){
-		res.send('Hello Homepage');
+		res.send({message: 'hey'});
 	});
 
 	app.post('/signup', Auth.signup);
