@@ -18,18 +18,20 @@ class Video extends Component {
 	}
 	videoSearch(term) {
 		YTSearch({key: API_KEY, term: term}, (videos) => {
+			console.log(this)
 			this.setState({
 				videos: videos,
-				selectedVideos: videos[0]
+				selectedVideo: videos[4]
 			});
 		});
 	}
 	render() {
-		const videoSearch = _.debounce((term)=>{ this.videoSearch(term) }, 1800);
+		console.log(this.state);
+		const videoSearch = _.debounce((term)=>{ this.videoSearch(term) }, 1000);
 
 		return (
 			<div>
-			 <searchBar onSearchTermChange={videoSearch} />
+			 <SearchBar onSearchTermChange={videoSearch} />
 			 <VideoDetail video={this.state.selectedVideo}/>
 			</div>
 		);
