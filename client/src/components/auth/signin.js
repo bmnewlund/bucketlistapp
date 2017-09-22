@@ -45,4 +45,4 @@ function mapStateToProps(state) {
 export default reduxForm({
 		form: 'signin',
 		fields: ['email', 'password']
-}, mapStateToProps, actions)(Signin);
+}, null, actions) (Signin);

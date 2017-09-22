@@ -3,19 +3,22 @@ import { browserHistory } from 'react-router';
 import { 
   AUTH_USER,
   UNAUTH_USER,
-  AUTH_ERROR 
+  AUTH_ERROR,
+  FETCH_MESSAGE,
+  FETCH_POSTS,
+  CREATE_POSTS,
+  FETCH_POST,
+  DELETE_POST
+
  } from './types';
 
 import authReducer from '../reducers/auth_reducer';
 
-
-export const CREATE_POSTS = 'CREATE_POSTS';
-//const ROOT_URL = 'http://rest.learncode.academy/api/paul';
 const ROOT_URL = 'http://localhost:3000';
-
 
 export function signinUser({ email, password }){
   return function(dispatch){
+    
     axios.post(`${ROOT_URL}/signin`, {email, password})
       .then(response => {
     
@@ -24,8 +27,8 @@ export function signinUser({ email, password }){
         browserHistory.push('/newitem');
         
          })
-          .catch(response =>  dispatch(authError("There was a something wrong with your request.")));
-  }
+          .catch(response =>  dispatch(authError("Bad login info")));
+    }
 }
 
 export function signoutUser(){
@@ -33,21 +36,34 @@ export function signoutUser(){
    return {type: UNAUTH_USER};
 }
 
-  export function signupUser({ email, password }) {
+export function signupUser({ email, password }) {
   return function(dispatch) {
     // Submit email/password to the server
-    axios.post(`$ROOT_URL}/signup`, { email, password })
+    axios.post(`${ROOT_URL}/signup`, { email, password })
       .then(response => {
         dispatch({type: AUTH_USER});
-
+          
           //update the token
-          localStorage.setItem('token',response.data.token);
+          localStorage.setItem('token', response.data.token);
           browserHistory.push('/newitem');
       })
-      .catch(rsponse => dispatch(authError(response.data.error)));
+      .catch(response => dispatch(authError(response.data.error)));
   }
 }
 
+export function fetchMessage() {
+  return function(dispatch) {
+    axios.get(ROOT_URL, {
+      headers: { authorization: localStorage.getItem('token') }
+    })
+      .then(response => {
+        dispatch({
+          type: FETCH_MESSAGE,
+          payload: response.data.message
+        });
+      });
+  }
+}
 
 
 export function authError(error) {
@@ -58,10 +74,37 @@ export function authError(error) {
 }
 
 
+export function fetchPosts() {
+
+  const request = axios.get(`${ROOT_URL}/posts`);
+
+  return {
+    type: FETCH_POSTS,
+    payload: request
+  };
+}
+
 export function createPost(props) {
-  const request = axios.post(`${ROOT_URL}/posts`, props);           
+  const request = axios.post(`${ROOT_URL}/posts`, props);
+
   return {
     type: CREATE_POSTS,
+    payload: request
+  };
+}
+
+export function fetchPost(id) {
+  const request = axios.get(`${ROOT_URL}/posts/${id}`);
+  return {
+    type: FETCH_POST,
+    payload: request
+  };
+}
+
+export function deletePost(id) {
+  const request = axios.delete(`${ROOT_URL}/posts/${id}`)
+  return {
+    type: DELETE_POST,
     payload: request
   };
 }

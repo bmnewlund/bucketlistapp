@@ -1,16 +1,18 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import authReducer from './auth_reducer';
-// import {
-// 	AUTH_USER,
-// 	UNAUTH_USER
-// } from '../actions/types';
+import {
+	AUTH_USER,
+	UNAUTH_USER
+} from '../actions/types';
+
+import postsReducer from './reducer_posts';
 
 
-//Define the properties of our Application State here
 const rootReducer = combineReducers({
-	form: formReducer,
-	auth: authReducer
+		form: formReducer,
+		auth: authReducer,
+		posts: postsReducer
 });
 
 export default rootReducer;

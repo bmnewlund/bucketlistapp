@@ -12,7 +12,7 @@ class Signup extends Component {
 		if (this.props.errorMessage) {
 			//Sign up error handling
 			return(
-				<div className="alert alert-dange">
+				<div className="alert alert-danger">
 				 <strong>Sorry, </strong>{this.props.errorMessage}
 				</div>
 			);
