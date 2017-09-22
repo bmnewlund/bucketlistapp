@@ -1,45 +1,45 @@
-var mongoose = require('mongoose'); //Importing mongoose
-var Schema = mongoose.Schema; //Tells mongoose about particular fields in the model
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 
-
 var userSchema = new Schema({
-	email: {
-		type: String,
-		unique: true,
-		lowercase: true //This converts everything to lowercase as mongo reads lower and upper case.
+		email: {
+		type: String, 
+		unique: true, 
+		lowercase: true
 	},
-	password: String
+		password: String
 });
 
+//Encrypt password after saving
 userSchema.pre('save', function(next){
 	var user = this;
 
-		bcrypt.genSalt(10, function(err, salt) {
-			if(err) { return next(err); }
-
-				bcrypt.hash(user.password, salt, null, function(err, hash){
-					if (err) { return next(err); }
-
-					user.password = hash;
-					next();
-				});
+	bcrypt.genSalt(10, function(err, salt){
+		if(err) { return next(err); }
+		
+		bcrypt.hash(user.password, salt, null, function(err, hash){
+			if (err) { return next(err); }
+		
+			user.password = hash;
+			next();
 		});
+	});
 });
 
 userSchema.methods.comparePassword = function(candidatePassword, callback){
 
-		//this.password is our hashed and salted password
+	//this.password is our hashed and salted password
 
-		bcrypt.compare(candidatePassword, this.password, function(err, isMatch){
-			//if there was an error, return the callback with the error
-			if (err) {return callback(err); }
-			//otherwise call the callback
-			callback(null, isMatch);
-		});
+     bcrypt.compare(candidatePassword, this.password, function(err, isMatch){
+		//if there was an error, return the callback with the error
+		if (err) { return callback(err); }
+		//otherwise call the callback
+		callback(null, isMatch);
+	});
 }
 
-var model = mongoose.model('user', userSchema); // This will actually create new users and load the Schema into Mongoose. This tells Mongoose that there is a new Schema called ‘userSchema’ which corresponds to a collection called 'user'(the first parameter).
+var model = mongoose.model('user', userSchema);
 
 module.exports = model;
 
