@@ -44,8 +44,8 @@ exports.fetchBucketList = function(req, res) {
       function fetchSuccess(data) {
         res.json(data);
       },
-      function fetchSuccess(data) {
-        res.json(500, err.message);
+      function fetchError(err) {
+        res.send(500, err.message);
       } 
     );
 }

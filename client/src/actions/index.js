@@ -97,10 +97,32 @@ export function createPost(props) {
   };
 }
 
-export function deletePost(id) {
-  const request = axios.delete(`${ROOT_URL}/posts/${id}`)
-  return {
-    type: DELETE_POST,
-    payload: request
-  };
+export function fetchPost(id) {
+  return function(dispatch) {
+    axios.get(`$ROOT_URL}/items/${id}`,config)
+      .then( (response) => {
+        console.log("Response", response)
+        dispatch({
+          type: FETCH_POST,
+          payload: response
+        });
+      })
+  }
 }
+
+export function deletePost(id) {
+
+  return function(dispatch){
+    axios.delete(`{ROOT_URL}/items/${id}`, config)
+      .then( (response) => {
+        dispatch({
+          type: DELETE_POST,
+          payload: response
+        });
+        browserHistory.push('/items');
+      });
+    }
+  }
+
+
+

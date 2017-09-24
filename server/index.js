@@ -7,7 +7,7 @@ var mongoose = require('mongoose'); //Imports the mongoose DB
 var cors = require('cors')
 
 //DB Connection
-mongoose.connect('mongodb://localhost:bucket/bucket'); //Mongoose is the package that we use to talk with the DB
+mongoose.connect('mongodb://localhost:bucketlist/bucket'); //Mongoose is the package that we use to talk with the DB
 
 // Middleware
 app.use(cors());
