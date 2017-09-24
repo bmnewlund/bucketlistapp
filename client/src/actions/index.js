@@ -75,28 +75,24 @@ export function authError(error) {
 
 
 export function fetchPosts() {
-
-  const request = axios.get(`${ROOT_URL}/posts`);
-
-  return {
-    type: FETCH_POSTS,
-    payload: request
-  };
+  return function(dispatch) {
+    axios.get(`${ROOT_URL}/items`, config)
+      .then( (response) => {
+        console.log("Response", response)
+        dispatch({
+          type: FETCH_POSTS,
+          payload: response
+        });
+      });
+  }
 }
+
 
 export function createPost(props) {
   const request = axios.post(`${ROOT_URL}/posts`, props);
 
   return {
     type: CREATE_POSTS,
-    payload: request
-  };
-}
-
-export function fetchPost(id) {
-  const request = axios.get(`${ROOT_URL}/posts/${id}`);
-  return {
-    type: FETCH_POST,
     payload: request
   };
 }
